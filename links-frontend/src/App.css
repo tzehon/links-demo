@@ -1,0 +1,353 @@
+/* Basic Reset & Body Styles */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  margin: 0;
+  background-color: #f4f6f8; /* Light gray background */
+  color: #212529; /* Default body text color - a common, slightly softer dark gray */
+  overflow-x: hidden; /* Prevent horizontal scrollbar during animation */
+}
+
+/* App Container */
+.app-container {
+  display: flex;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  width: 250px;
+  background-color: #2c3e50; /* Dark blue-gray */
+  color: white; /* Text inside sidebar is white */
+  padding: 20px;
+  box-sizing: border-box;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1000;
+  transform: translateX(0%);
+  transition: transform 0.3s ease-in-out;
+  overflow-y: auto;
+}
+
+.sidebar.closed {
+  transform: translateX(-100%);
+}
+
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.sidebar-header h1 {
+  font-size: 1.8em;
+  margin: 0;
+  color: #ecf0f1; /* Lighter text for GrabLink title */
+}
+
+.sidebar-toggle-btn { /* Common style for toggle buttons */
+  background: transparent;
+  border: 1px solid #7f8c8d;
+  color: #ecf0f1; /* Light color for button on dark sidebar */
+  padding: 6px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1.2em;
+  line-height: 1; /* Important for icon alignment */
+  transition: background-color 0.2s ease;
+}
+.sidebar-toggle-btn:hover {
+  background-color: #34495e; /* Darker shade on hover */
+}
+
+.sidebar-toggle-btn.external-toggle { /* Specific style for the one in main content */
+  background: #f0f0f0; /* Light background for visibility */
+  border: 1px solid #ccc;
+  color: #444; /* Darker text for contrast */
+  margin-right: 15px;
+  z-index: 1001; /* Ensure it's clickable above other elements */
+}
+.sidebar-toggle-btn.external-toggle:hover {
+  background-color: #e0e0e0;
+}
+
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar li:hover {
+  background-color: #34495e;
+}
+
+.sidebar li.active {
+  background-color: #1abc9c;
+  font-weight: bold;
+}
+
+/* Main Content Styles */
+.main-content {
+  flex-grow: 1;
+  padding: 25px;
+  margin-left: 250px;
+  transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+  width: calc(100% - 250px);
+  box-sizing: border-box;
+  overflow-x: auto;
+  /* Inherits 'color: #212529;' from body */
+}
+
+.main-content.sidebar-closed {
+  margin-left: 0;
+  width: 100%;
+}
+
+/* Wrapper for main content header bar (to hold external toggle + original header) */
+.main-content-header-bar {
+  display: flex;
+  align-items: center;
+  /* margin-bottom: 20px; /* If you want global margin for this bar */
+}
+
+/* Header within Main Content */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-grow: 1; /* Allows it to take space next to the external toggle button */
+  margin-bottom: 20px; /* Original margin for spacing below header */
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 1.8em;
+  color: #2c3e50; /* Specific dark blue-gray for "Payments" title */
+}
+
+.date-range-display {
+  font-size: 0.9em;
+  color: #555; /* Specific medium gray for date range text */
+}
+
+/* Search Bar */
+.search-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.search-input {
+  flex-grow: 1;
+  padding: 10px 15px;
+  font-size: 1em;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+  /* Inherits text color */
+}
+.search-input:focus {
+  outline: none;
+  border-color: #1abc9c;
+  box-shadow: 0 0 0 2px rgba(26, 188, 156, 0.2);
+}
+
+/* Content Area Layout */
+.content-area {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start; /* Aligns facets and table to their top */
+}
+
+/* Facets Container */
+.facets-container {
+  width: 220px;
+  min-width: 220px; /* Prevents shrinking during layout changes */
+  padding: 15px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  align-self: flex-start; /* Keep it aligned to the top */
+}
+
+.facet-group h4 {
+  margin-top: 0;
+  margin-bottom: 10px;
+  font-size: 0.95em;
+  color: #34495e; /* Specific color for facet titles */
+  border-bottom: 1px solid #eee;
+  padding-bottom: 5px;
+}
+
+.facet-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85em;
+  padding: 6px 0;
+  cursor: pointer;
+  color: #555; /* Specific color for facet item text */
+}
+.facet-item:hover {
+  color: #1abc9c; /* Active color on hover */
+}
+.facet-item input[type="checkbox"] {
+  margin-right: 8px;
+  cursor: pointer;
+}
+.facet-item .count {
+  background-color: #e0e0e0;
+  color: #555; /* Count text color */
+  font-size: 0.8em;
+  padding: 2px 6px;
+  border-radius: 10px;
+}
+.facet-item.selected .facet-name {
+  font-weight: bold;
+  color: #1abc9c; /* Active color for selected facet name */
+}
+
+/* Table Container */
+.table-container {
+  flex-grow: 1;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  overflow-x: auto; /* For wide tables */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 0.9em;
+  white-space: nowrap; /* Prevent text wrapping in cells */
+}
+
+th {
+  background-color: #f9f9f9; /* Light gray for table header */
+  font-weight: 600;
+  color: #333; /* Dark gray for table header text */
+  position: sticky; /* Make headers sticky if table scrolls vertically */
+  top: 0;           /* Required for sticky */
+  z-index: 10;      /* Keep above scrolling content */
+}
+
+td {
+  color: #555; /* Medium gray for table cell data */
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:hover {
+  background-color: #f5f5f5; /* Hover effect for table rows */
+}
+
+/* Badges and Icons for PSP and Scheme */
+.psp-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8em;
+  font-weight: 500;
+  color: white; /* Default text color for badges, overridden by specific classes if needed */
+}
+.psp-maybankv2 { background-color: #f1c40f; color: #2c3e50; } /* Yellow with dark text */
+.psp-cimbv2 { background-color: #e74c3c; } /* Red */
+.psp-stripedirect { background-color: #9b59b6; } /* Purple */
+.psp-paypalexpress { background-color: #3498db; } /* Blue */
+.psp-adyengateway { background-color: #2ecc71; } /* Green */
+.psp-braintreepayments { background-color: #16a085; } /* Darker Green */
+.psp-default { background-color: #7f8c8d; } /* Grey */
+
+.scheme-icon {
+  width: auto;
+  min-width: 20px;
+  height: 15px;
+  display: inline-block;
+  padding: 0 4px;
+  margin-right: 5px;
+  vertical-align: middle;
+  font-weight: bold;
+  font-size: 0.8em;
+  text-align: center;
+  line-height: 15px;
+  border-radius: 2px;
+  color: white; /* Default text color for scheme icons */
+}
+.scheme-visa { background-color: #1a1f71; }
+.scheme-mc { background-color: #eb001b; }
+.scheme-amex { background-color: #007bc1; }
+.scheme-jcb { background-color: #006A3D; }
+.scheme-discover { background-color: #FF6600; }
+.scheme-default { background-color: #bdc3c7; color: #2c3e50; } /* Default with dark text */
+
+/* Pagination */
+.pagination {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 10px;
+}
+
+.pagination button, .pagination span {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  background-color: white;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.9em;
+  /* Text color will be inherited or browser default for buttons */
+}
+
+.pagination button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.pagination button.active { /* Note: .active class not currently applied in JS pagination */
+  background-color: #1abc9c;
+  color: white;
+  border-color: #1abc9c;
+}
+.pagination span {
+  cursor: default;
+}
+
+/* Loading / No Results States */
+.no-results,
+.table-container p, /* Targets loading messages in table */
+.facets-container p { /* Targets loading/empty messages in facets */
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 1.1em;
+  color: #777; /* Specific lighter gray for these messages */
+}
