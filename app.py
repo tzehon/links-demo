@@ -13,8 +13,8 @@ app = Flask(__name__)
 CORS(app)
 
 MONGO_URI = os.getenv("MONGO_URI")
-DATABASE_NAME = "links_portal"
-COLLECTION_NAME = "payments"
+DATABASE_NAME = os.getenv("DATABASE_NAME", "links_portal")
+COLLECTION_NAME = os.getenv("COLLECTION_NAME", "payments")
 SEARCH_INDEX_NAME = "default"
 
 try:

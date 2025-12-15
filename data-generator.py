@@ -9,8 +9,8 @@ load_dotenv() # Load environment variables from .env file
 
 # --- Configuration ---
 MONGO_URI = os.getenv("MONGO_URI")
-DATABASE_NAME = "links_portal" # Or your preferred DB name
-COLLECTION_NAME = "payments"
+DATABASE_NAME = os.getenv("DATABASE_NAME", "links_portal")
+COLLECTION_NAME = os.getenv("COLLECTION_NAME", "payments")
 NUM_RECORDS = 1000 # Number of payment records to generate
 
 # --- Data Choices ---

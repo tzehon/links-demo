@@ -68,18 +68,25 @@ Links is a web application designed to provide a portal for viewing, searching, 
      ```bash
      pip install -r requirements.txt
      ```
-     *(Note: If `requirements.txt` was generated in a Conda environment and contains `@ file:///...` lines, `pip` will usually ignore them and fetch from PyPI. If issues arise, ensure `requirements.txt` lists standard package names and versions, or install main packages manually: `pip install Flask Flask-Cors pymongo python-dotenv Faker dnspython`)*
    * Set up environment variables:
-     * Create a file named `.env` in the project root directory.
-     * Add your MongoDB Atlas Connection String URI to this `.env` file:
-       ```env
-       MONGO_URI="mongodb+srv://<your_username>:<your_password>@<your_atlas_cluster_address>/links_portal?retryWrites=true&w=majority"
+     * Copy the sample environment file:
+       ```bash
+       cp .env.sample .env
        ```
-       Replace the placeholders with your actual MongoDB Atlas credentials and cluster address. The database name should be `links_portal`. **Important:** Ensure your current IP address is whitelisted in your Atlas cluster's Network Access settings.
+     * Edit `.env` and fill in your MongoDB Atlas credentials. You can customize `DATABASE_NAME` and `COLLECTION_NAME` if desired.
+     * **Important:** Ensure your current IP address is whitelisted in your Atlas cluster's Network Access settings.
 
-**3. MongoDB Atlas - Atlas Search Index Setup**
+**3. Data Generation**
+   * Ensure you are in the project root directory with your Python virtual environment activated.
+   * Run the data generator script:
+     ```bash
+     python data-generator.py
+     ```
+     This will create the database and collection (if they don't exist) and populate it with 1000 sample payment records.
+
+**4. MongoDB Atlas - Atlas Search Index Setup**
    * In your MongoDB Atlas UI, navigate to your cluster, then "Browse Collections".
-   * Select the `links_portal` database and `payments` collection.
+   * Select your database and collection (default: `links_portal.payments`).
    * Go to the "Search" tab for that collection.
    * Click "Create Search Index".
    * Choose the "JSON Editor" method.
@@ -87,14 +94,6 @@ Links is a web application designed to provide a portal for viewing, searching, 
    * In the JSON editor text area, paste the contents of the `index.js` file from this repository. This contains the required Atlas Search index definition with field mappings for `keyword`, `standard`, `autocomplete`, and `facet` types.
    * Click "Create Search Index" (or "Save Changes" if editing).
    * **Crucially, wait for the index to finish building and its status becomes "Active".**
-
-**4. Data Generation (Optional - if you need sample data)**
-   * Ensure you are in the project root directory with your Python virtual environment activated.
-   * Run the data generator script:
-     ```bash
-     python data-generator.py
-     ```
-     This will populate the `payments` collection in the `links_portal` database with 1000 sample payment records.
 
 **5. Frontend Setup (`links-frontend/`)**
    * Navigate to your frontend application directory (e.g., `links-frontend`):
