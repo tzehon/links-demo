@@ -51,10 +51,10 @@ Links is a web application designed to provide a portal for viewing, searching, 
 **1. Obtain Project Files**
    Clone the repository.
 
-**2. Backend Setup (`backend/`)**
-   * Navigate to the `backend` directory:
+**2. Backend Setup**
+   * Navigate to the project root directory:
      ```bash
-     cd path/to/your/project/backend
+     cd path/to/your/project
      ```
 
    * Create and activate a Python virtual environment:
@@ -70,32 +70,31 @@ Links is a web application designed to provide a portal for viewing, searching, 
      ```
      *(Note: If `requirements.txt` was generated in a Conda environment and contains `@ file:///...` lines, `pip` will usually ignore them and fetch from PyPI. If issues arise, ensure `requirements.txt` lists standard package names and versions, or install main packages manually: `pip install Flask Flask-Cors pymongo python-dotenv Faker dnspython`)*
    * Set up environment variables:
-     * Create a file named `.env` inside the `backend` directory.
+     * Create a file named `.env` in the project root directory.
      * Add your MongoDB Atlas Connection String URI to this `.env` file:
        ```env
-       # backend/.env
-       MONGO_URI="mongodb+srv://<your_username>:<your_password>@<your_atlas_cluster_address>/<your_database_name>?retryWrites=true&w=majority"
+       MONGO_URI="mongodb+srv://<your_username>:<your_password>@<your_atlas_cluster_address>/links_portal?retryWrites=true&w=majority"
        ```
-       Replace the placeholders with your actual MongoDB Atlas credentials, cluster address, and desired database name (e.g., `links_portal`). **Important:** Ensure your current IP address is whitelisted in your Atlas cluster's Network Access settings.
+       Replace the placeholders with your actual MongoDB Atlas credentials and cluster address. The database name should be `links_portal`. **Important:** Ensure your current IP address is whitelisted in your Atlas cluster's Network Access settings.
 
 **3. MongoDB Atlas - Atlas Search Index Setup**
    * In your MongoDB Atlas UI, navigate to your cluster, then "Browse Collections".
-   * Select the database and collection you configured in your `MONGO_URI`.
+   * Select the `links_portal` database and `payments` collection.
    * Go to the "Search" tab for that collection.
    * Click "Create Search Index".
    * Choose the "JSON Editor" method.
-   * For **Index Name**, enter `default` (or ensure it matches the `SEARCH_INDEX_NAME` variable in `backend/app.py`).
-   * In the JSON editor text area (for defining the index mappings), you will need to paste the appropriate Atlas Search Index JSON definition. This definition should include `dynamic: false` and detailed field mappings for `keyword`, `standard`, `autocomplete`, and `facet` types as required by `backend/app.py`.
+   * For **Index Name**, enter `default` (or ensure it matches the `SEARCH_INDEX_NAME` variable in `app.py`).
+   * In the JSON editor text area, paste the contents of the `index.js` file from this repository. This contains the required Atlas Search index definition with field mappings for `keyword`, `standard`, `autocomplete`, and `facet` types.
    * Click "Create Search Index" (or "Save Changes" if editing).
    * **Crucially, wait for the index to finish building and its status becomes "Active".**
 
 **4. Data Generation (Optional - if you need sample data)**
-   * Ensure you are in the `backend` directory with your Python virtual environment activated.
+   * Ensure you are in the project root directory with your Python virtual environment activated.
    * Run the data generator script:
      ```bash
-     python data_generator.py
+     python data-generator.py
      ```
-     This will populate the `payments` collection in your MongoDB Atlas database with sample data.
+     This will populate the `payments` collection in the `links_portal` database with 1000 sample payment records.
 
 **5. Frontend Setup (`links-frontend/`)**
    * Navigate to your frontend application directory (e.g., `links-frontend`):
@@ -113,8 +112,8 @@ Links is a web application designed to provide a portal for viewing, searching, 
 
 1.  **Start the Backend (Flask API):**
     * Open a terminal.
-    * Navigate to the `backend` directory.
-    * Activate its Python virtual environment (e.g., `source .venv/bin/activate`).
+    * Navigate to the project root directory.
+    * Activate the Python virtual environment (e.g., `source .venv/bin/activate`).
     * Run the Flask application:
       ```bash
       python app.py
