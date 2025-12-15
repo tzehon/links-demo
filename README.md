@@ -95,10 +95,10 @@ Links is a web application designed to provide a portal for viewing, searching, 
    * Click "Create Search Index" (or "Save Changes" if editing).
    * **Crucially, wait for the index to finish building and its status becomes "Active".**
 
-**5. Frontend Setup (`links-frontend/`)**
-   * Navigate to your frontend application directory (e.g., `links-frontend`):
+**5. Frontend Setup**
+   * Navigate to the frontend directory:
      ```bash
-     cd path/to/your/project/links-frontend
+     cd links-frontend
      ```
    * Install Node.js dependencies:
      ```bash
